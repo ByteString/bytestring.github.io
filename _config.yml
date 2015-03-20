@@ -1,0 +1,15 @@
+# Site settings
+title: Byte String Writes Things
+subtitle: Scriptrix Adventures in SL
+email: bytestring@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  This is pretty much a site where Byte String will Write Things.
+  If at any time you become confused about the purpose of the site
+  and get all "what the actual shit am I doing here?" refer back
+  to this description and you will be enlightened.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "bytestring.github.io" # the base hostname & protocol for your site
+github_username:  bytestring
+
+# Build settings
+markdown: kramdown
