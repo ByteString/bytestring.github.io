@@ -19,7 +19,7 @@ For the purposes of this research, I'm going to assume that a script has been co
 
 First of all, for those playing along at home, we're going to need to get the Osiris Combat System running. I have a fork of this repo available at https://github.com/ByteString/osiris-cs/ which at the time of writing this sentence is not suitable for execution but will be updated as soon as I have set up the meter with all of the pre-populated passwords it needs to get running.
 
-Here is a rough description of the initialisation of the Osiris CS.
+Here is a rough description of the initialisation of the Osiris CS. I encourage you to read along with me!
 
 The main script requests permissions. It then initialises the variable ‘securePass’ which is the prepopulated secret used in the initial key-sharing handshake. Every script knows this secret and it is used during initialisation to encrypt the messages which share with each script which keys they should use going forward. Other scripts may refer to this as ‘initialpass' which is what we’ll call it from now on. The main script is simply reusing the ’securePass’ variable and overwriting this initialpass when the final securePass is agreed upon. 
 
