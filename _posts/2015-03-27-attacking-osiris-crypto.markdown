@@ -2,7 +2,7 @@
 layout: post
 title:  "Attacking Osiris: Introducing Osiris Initialisation"
 date:   2015-03-20 22:17:45
-categories: security, crypto, meter
+categories: security
 ---
 
 Many years ago in the glory days of Erie Isle, the roleplaying sim I look back on most fondly, I gave some assistance to Colleen Marjeta in securing what was then the Roleplay Combat System (RPCS) and what would eventually be branded Osiris. Having had some measure of success with attacks on DCS (a drama which is another story. TODO: Link to that story here later) it was interesting to apply those lessons to this new meter and actively work against new defences as they were implemented.
@@ -45,18 +45,18 @@ The security of this function will be investigated in a future post. The passwor
 
 Further integrity checks are carried out. The prims in the object are counted. The owner of all of the scripts is confirmed as the meter creator, then the number of scripts is confirmed also, to make sure nothing has snuck in.
 
-The meter now uses initialCrypt() to send a secure challenge containing the 24 character securePass encrypted using the initialpass which all scripts know. This security challenge is a string in the form “security|securePass||security\_key”.
+The meter now uses initialCrypt() to send a secure challenge containing the 24 character securePass encrypted using the initialpass which all scripts know. This security challenge is a string in the form “security\|securePass\|\|security\_key”.
 
 Now, security\_key is a value we haven’t encountered yet. Every script contains a predefined ‘secureKey' it uses to identify itself and we will refer to these within this post as <script name>_key. The security script contains a master list of these keys which it uses to confirm that a script is what it says it is and each script knows security_key so they can be sure the security script is talking to them.
 
 A timer is set to trigger every second will check to see whether all scripts have reported back, confirming receipt of the securePass and also identifying themselves as legitimate components of the meter.
 
-Each script receives the challenge from the security script. They decrypt it using their predefined knowledge of the initialpass and they ensure that the first value is the string “security”, the last value is security_key which they have a predefined knowledge of. This is considered sufficient to conclude that this message came from the security script, so the securePass that has been transmitted is stored. Each script then uses this securePass to encrypt a response in the format “<script name>|<random string>||<secure\_key>” where secure_key is the unique key that script uses to identify itself.
+Each script receives the challenge from the security script. They decrypt it using their predefined knowledge of the initialpass and they ensure that the first value is the string “security”, the last value is security_key which they have a predefined knowledge of. This is considered sufficient to conclude that this message came from the security script, so the securePass that has been transmitted is stored. Each script then uses this securePass to encrypt a response in the format “<script name>\|<random string>\|\|<secure\_key>” where secure_key is the unique key that script uses to identify itself.
 
-The security script collects all of these responses, ensuring that the scripts correctly identify themselves and prove themselves as legitimate peers to communicate with. It continues to check once a second whether it has received all responses and when it finally has it broadcasts “SECURITYOK||<the time>”. If it loops more than ten times the meter will destroy itself.
+The security script collects all of these responses, ensuring that the scripts correctly identify themselves and prove themselves as legitimate peers to communicate with. It continues to check once a second whether it has received all responses and when it finally has it broadcasts “SECURITYOK\|\|<the time>”. If it loops more than ten times the meter will destroy itself.
 
-When the main script receives the SECURITYOK signal and confirms that it comes from security, it challenges security to ensure that the security script is legitimate. The main script sends the challenge “MAIN|<random number>||main_key” encrypted using the securePass which was distributed earlier.
+When the main script receives the SECURITYOK signal and confirms that it comes from security, it challenges security to ensure that the security script is legitimate. The main script sends the challenge “MAIN\|<random number>\|\|main_key” encrypted using the securePass which was distributed earlier.
 
-The security script confirms that main is communicating with it before responding “SECURITY|<a new random password>||security_key”. The new randomly generated password is a 12 character password generated using the same function as before. It’s unclear whether this password is used. On receiving this, main loads the character.
+The security script confirms that main is communicating with it before responding “SECURITY\|<a new random password>\|\|security_key”. The new randomly generated password is a 12 character password generated using the same function as before. It’s unclear whether this password is used. On receiving this, main loads the character.
 
 And now the meter is running. If you'll excuse me, I'll duck away and get the meter actually running, push that to GitHub and then come back to start talking about how I might attack it.
