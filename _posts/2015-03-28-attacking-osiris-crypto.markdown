@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Attacking Osiris: Introducing Osiris Initialisation"
-date:   2015-03-20 22:17:45
+date:   2015-03-28 00:20:00
 categories: security
 ---
 
