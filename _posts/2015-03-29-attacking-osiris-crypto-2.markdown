@@ -78,7 +78,7 @@ We'd be left with P2, which is a decrypted value the meter is trying to hide fro
 
 We're going to assume that somewhere in the communications exists the word \"password\". It's a nice common security word and maybe the meter refers to it. We can do this automatically with a long list of likely words.
 
-Readers will know what the attacker doesn't, that there is a message in the meter which has the plaintext value \"password|random\_number|password\_key\". If the attacker cycles through every possible combination of P1 ⊕ P2 and XORs it with the string \"password\" repeated as many times as necessary, any combinations in which \"password|random\_number|password\_key\" was either P1 or P2 will reveal part of the other plaintext, specifically the parts that line up with the word \"password\". If \"password\" is not conventiently at the start of the string as it is here, we offset it to test for placement in different locations, trying the following:
+Readers will know what the attacker doesn't, that there is a message in the meter which has the plaintext value \"password\|random\_number\|password\_key\". If the attacker cycles through every possible combination of P1 ⊕ P2 and XORs it with the string \"password\" repeated as many times as necessary, any combinations in which \"password\|random\_number\|password\_key\" was either P1 or P2 will reveal part of the other plaintext, specifically the parts that line up with the word \"password\". If \"password\" is not conventiently at the start of the string as it is here, we offset it to test for placement in different locations, trying the following:
 
     passwordpasswordpasswordpassword
     asswordpasswordpasswordpasswordp
