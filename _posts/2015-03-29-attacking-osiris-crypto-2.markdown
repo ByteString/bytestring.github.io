@@ -15,16 +15,16 @@ It's worth noting that XOR has a bunch of mathematical properties but the most i
 
 Crucially, here are a few facts about XOR.
 
-Plaintext ⊕ Key = Ciphertext
-Ciphertext ⊕ Key = Plaintext
-AND: Plaintext ⊕ Ciphertext = Key
+    Plaintext ⊕ Key = Ciphertext
+    Ciphertext ⊕ Key = Plaintext
+    AND: Plaintext ⊕ Ciphertext = Key
 
 Because XOR happens at the level of individual ones and zeroes, these properties hold true for any segment of the strings also. The last two characters of the plaintext XORed with the last two characters of the key produce the last two characters of the ciphertext. At the binary level, XOR compares each row of bits and performs the following operation:
 
-10000100
-01101111⊕
---------
-11101011
+    10000100
+    01101111⊕
+    --------
+    11101011
 
 The end value is one if and only if the two values are different, otherwise the end value is zero.
 
@@ -32,25 +32,25 @@ In cryptography, a one time pad is a very secure method of encrypting data accom
 
 From now on, P will be used to refer to Plaintext, K to the Key and C to the Ciphertext. These are not quite standard notation, but fuck it, I do what I want.
 
-Given two plaintext values, P1 and P2, both encrypted using the key K we get C1 and C2 respectively. That is to say  that:
-P1 ⊕ K = C1
-P2 ⊕ K = C2
+Given two plaintext values, P1 and P2, both encrypted using the key K we get C1 and C2 respectively. That is to say that:
+    P1 ⊕ K = C1
+    P2 ⊕ K = C2
 
 We'll say that P1 is 11010011, P2 is 00101101 and K is 10100110.
 
 So C1 is therefore:
 
-11010011
-10100110⊕
---------
-01110101
+    11010011
+    10100110⊕
+    --------
+    01110101
 
 While C2 is:
 
-00101101
-10100110⊕
---------
-10001011
+    00101101
+    10100110⊕
+    --------
+    10001011
 
 Now I'm not going to illustrate it here, you can do the working on your own, but C1 ⊕ C2 is 11111110. Interestingly, P1 ⊕ P2 is also 11111110. What we've identified here is that given the same key, C1 ⊕ C2 == P1 ⊕ P2. This is another important property of XOR operations. Given two ciphertexts, we can *entirely exclude the encryption from the equation* and deal purely with plaintexts.
 
@@ -72,7 +72,7 @@ The first thing I'm going to do is to XOR each of the ciphertexts with every oth
 
 If I have C1 ⊕ C2, which is equal to P1 ⊕ P2 and I can guess either P1 or P2 (we'll say I guess P1) I can XOR this pair with P1 as in the following operation:
 
-P1 ⊕ P2 ⊕ P1
+    P1 ⊕ P2 ⊕ P1
 
 We'd be left with P2, which is a decrypted value the meter is trying to hide from us. Fortunately, because I'm discarding any knowledge given by open sourcing the meter, we don't know P1... but we can probably guess part of it and, if we recall from earlier, the rules that apply to XORing strings also apply to XORing parts of strings.
 
@@ -80,10 +80,10 @@ We're going to assume that somewhere in the communications exists the word \"pas
 
 Readers will know what the attacker doesn't, that there is a message in the meter which has the plaintext value \"password|random\_number|password\_key\". If the attacker cycles through every possible combination of P1 ⊕ P2 and XORs it with the string \"password\" repeated as many times as necessary, any combinations in which \"password|random\_number|password\_key\" was either P1 or P2 will reveal part of the other plaintext, specifically the parts that line up with the word \"password\". If \"password\" is not conventiently at the start of the string as it is here, we offset it to test for placement in different locations, trying the following:
 
-passwordpasswordpasswordpassword
-asswordpasswordpasswordpasswordp
-sswordpasswordpasswordpasswordpa
-swordpasswordpasswordpasswordpas
+    passwordpasswordpasswordpassword
+    asswordpasswordpasswordpasswordp
+    sswordpasswordpasswordpasswordpa
+    swordpasswordpasswordpasswordpas
 
 And so on.
 
