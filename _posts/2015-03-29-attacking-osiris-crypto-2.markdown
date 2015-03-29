@@ -5,6 +5,8 @@ date:   2015-03-29 03:00:00
 categories: security
 ---
 
+UPDATE: Rereading this I am entertained by the considerable redundancy in the steps taken. In my defence, it was the wee hours of the morning and I was hoping to demonstrate both attacks that relied on XORing ciphertexts together and those that relied on known plaintext. I kind of combined them and it should be noted that for a known plaintext attack it's not necessary at all to XOR the ciphertexts together.
+
 This post follows on from yesterday's post which introduced the Osiris Combat Meter and a few related security concepts. In yesterday's post, I mentioned that after generating a random password, the security script within this meter distributes this password encrypted using a predefined key.
 
 When I use the term 'encrypted' I am refering to a process where the data and the key are combined together to create a message which is hopefully unreadable to an attacker. In Osiris, this is done via XORing together the two pieces of data. I'll go into what XOR is in a moment but will mention once more than any attacks detailed against this meter rely on the assumption that a script is injected into the meter. This is a nontrivial task which has not yet been accomplished in the real world, so any attacks are theoretical and rely on conquering that obstacle.
