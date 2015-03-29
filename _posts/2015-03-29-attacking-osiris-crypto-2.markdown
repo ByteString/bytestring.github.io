@@ -5,7 +5,7 @@ date:   2015-03-29 03:00:00
 categories: security
 ---
 
-UPDATE: Rereading this I am entertained by the considerable redundancy in the steps taken. In my defence, it was the wee hours of the morning and I was hoping to demonstrate both attacks that relied on XORing ciphertexts together and those that relied on known plaintext. I kind of combined them and it should be noted that for a known plaintext attack it's not necessary at all to XOR the ciphertexts together.
+_UPDATE: Rereading this I am entertained by the considerable redundancy in the steps taken. In my defence, it was the wee hours of the morning and I was hoping to demonstrate both attacks that relied on XORing ciphertexts together and those that relied on known plaintext. I kind of combined them and it should be noted that for a known plaintext attack it's not necessary at all to XOR the ciphertexts together. I may rewrite this post entirely in a way that makes more sense._
 
 This post follows on from yesterday's post which introduced the Osiris Combat Meter and a few related security concepts. In yesterday's post, I mentioned that after generating a random password, the security script within this meter distributes this password encrypted using a predefined key.
 
