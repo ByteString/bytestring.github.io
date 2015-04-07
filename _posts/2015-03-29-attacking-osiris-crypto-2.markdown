@@ -84,7 +84,7 @@ We'll attempt a known plaintext attack to recover portions of the key and use th
 
 As an attacker, we can build a list of common words to try XORing against the ciphertext. In this example, I'll just jump straight to assuming that somewhere in the communications exists the word \"password\". It's a nice common security word and maybe the meter refers to it. We can do this automatically with a long list of likely words.
 
-Readers will know what the attacker doesn't, that there is a message in the meter which has the plaintext value \"password\|random\_number\|password\_key\". If the attacker cycles through every ciphertext and XORs it with the string \"password\" repeated as many times as necessary, any ciphertexts which contains the word "password" reveal part the corresponding part of the key, where it lines up with the word \"password\". If \"password\" is not conventiently at the start of the string as it is here, we offset it to test for placement in different locations, trying the following:
+Readers will know what the attacker doesn't, that there is a message in the meter which has the plaintext value \"password\\|random\_number\\|password\_key\". If the attacker cycles through every ciphertext and XORs it with the string \"password\" repeated as many times as necessary, any ciphertexts which contains the word "password" reveal part the corresponding part of the key, where it lines up with the word \"password\". If \"password\" is not conventiently at the start of the string as it is here, we offset it to test for placement in different locations, trying the following:
 
     passwordpasswordpasswordpassword
     asswordpasswordpasswordpasswordp
@@ -107,7 +107,7 @@ Because the word we're testing has eight characters, a successful match will giv
     [01:30] RPCS Original: Potential key partial is: ~@Gfsn6x
     [01:30] RPCS Original: Potential key partial is: n@A`zu>r
     [01:30] RPCS Original: Potential key partial is: ]lO6*5o)
-    [01:30] RPCS Original: Potential key partial is: {OGn|`:l
+    [01:30] RPCS Original: Potential key partial is: {OGn\|`:l
     [01:30] RPCS Original: Potential key partial is: yN^jl}e(
     [01:30] RPCS Original: Potential key partial is: yIRu~b#y
     [01:30] RPCS Original: Potential key partial is: j@Asvb;y
@@ -119,34 +119,34 @@ Because the word we're testing has eight characters, a successful match will giv
 Now we just need to take a single ciphertext and try to use this partial key to decrypt it.
 
     [01:39] RPCS Original: Decryption attempt is: fmyG 0"8)M?M'yp*#???<x]2"=#?&188,I?M'+<(XhsFB(:VsZ!?yUy32?4O?u.eo using ~LTO~o3p
-    [01:39] RPCS Original: Decryption attempt is: paph$::l?A?b#sh~5??=8rEf41*$"; l:E?b#!$|NdziF""?eV(!}_g-%>??K?mzsc using h@]`ze+$
+    [01:39] RPCS Original: Decryption attempt is: paph$::l?A?b#sh~5??=8rEf41*$"; l:E?b#!$\|NdziF""?eV(!}_g-%>??K?mzsc using h@]`ze+$
     [01:39] RPCS Original: Decryption attempt is: fajn-1'0)A?d*xu"#??;1yX:"10"+0=0,E?d**9 Xd`oO)?^sV2'tTzq3>??B?p&ec using ~@Gfsn6x
-    [01:39] RPCS Original: Decryption attempt is: ram|6140=A?v1xf"7??)*yK:617000.08E?v1** Ldg}T),^gV55oTiq'>??Y?c&qc using j@@thn%x
+    [01:39] RPCS Original: Decryption attempt is: ram\|6140=A?v1xf"7??)*yK:617000.08E?v1** Ldg}T),^gV55oTiq'>??Y?c&qc using j@@thn%x
     
 That last one is what we were looking for. If we pad "j@@thn%x" out with zeroes to make it the same length as the original key (this key length can be determined statistically or through trial and error for a real attacker) we get the following.
     
     [01:44] RPCS Original: Final decryption is: particle!yh2i8vohgdsp%^r00869064g2i,i8sjmb*!wA?,lqVbsNdg9\=S?>????$v?YV
-    [01:44] RPCS Original: Final decryption is: main|794b1m;i8mjmbfmp$_w1245000.b5o2i8????}-2b'
+    [01:44] RPCS Original: Final decryption is: main\|794b1m;i8mjmbfmp$_w1245000.b5o2i8????}-2b'
     qND0WasS?C?g?n???o
-    [01:44] RPCS Original: Final decryption is: API|2821`0k2i8mjmbfmp'_v1390000.b5o2i8?&i;3*t#9?YgmLtlbm1w(F?|{63??`
+    [01:44] RPCS Original: Final decryption is: API\|2821`0k2i8mjmbfmp'_v1390000.b5o2i8?&i;3*t#9?YgmLtlbm1w(F?\|{63??`
     [01:44] RPCS Original: Final decryption is: dmgHandl7w#;j1zbjkfmp;^r00006173b1h2i8mjmbfmpi?3bhhpMn/L%i?o?k?????e?D??OY=
-    [01:44] RPCS Original: Final decryption is: skills|1`<j0k1sjm|fmp%^r17375220b+o2i8sj!.9>#{&?hxtTV78y*U1x
+    [01:44] RPCS Original: Final decryption is: skills\|1`<j0k1sjm\|fmp%^r17375220b+o2i8sj!.9>#{&?hxtTV78y*U1x
     A?n??4d/(
-    [01:44] RPCS Original: Final decryption is: sim|3385k0h2i8mjmbfmp Wz3684000.b5o2i8?&,?5?kY?4G64jB3sw?dgi=e?b??b`
+    [01:44] RPCS Original: Final decryption is: sim\|3385k0h2i8mjmbfmp Wz3684000.b5o2i8?&,?5?kY?4G64jB3sw?dgi=e?b??b`
     [01:44] RPCS Original: Final decryption is: dataload7w#6j0ujdffmn%^r00084680a7o2w8sjmbf!<$?	FeS6qsGd?@2I?fl=o???/O61=
     [01:44] RPCS Original: Final decryption is: targetin5yn4h9uilbfmn%^r00078175a6o2i&sjmbfm<i(34KBr/BA4?Ohpm9?c?#?>?$?0E=
-    [01:44] RPCS Original: Final decryption is: GM|40555`5o2i&sjmbfmw-Xv705000.0b5o2it?l>k?;8S+?vMND4XoG:<9q,g????k
-    [01:44] RPCS Original: Final decryption is: comms|73`1f0i8sjsbfmp%^q51671000b+o2i8sj!.??."??gO0z2CU1<qjWlR2 v>4
+    [01:44] RPCS Original: Final decryption is: GM\|40555`5o2i&sjmbfmw-Xv705000.0b5o2it?l>k?;8S+?vMND4XoG:<9q,g????k
+    [01:44] RPCS Original: Final decryption is: comms\|73`1f0i8sjsbfmp%^q51671000b+o2i8sj!.??."??gO0z2CU1<qjWlR2 v>4
     #(
     [01:44] RPCS Original: Final decryption is: password.2o;i<qnmbfsp%^r00838192k5o2w8sjmbf!<]??oXPtwhni5kgH=d??-<???P^!=
-    [01:44] RPCS Original: Final decryption is: ranged|2d5g3h0sjm|fmp%^r12310180b5q2i8sjm.*-?S?up8t/Uo/dc1<clA0?$e;-6@S
+    [01:44] RPCS Original: Final decryption is: ranged\|2d5g3h0sjm\|fmp%^r12310180b5q2i8sjm.*-?S?up8t/Uo/dc1<clA0?$e;-6@S
     [01:44] RPCS Original: Key stealing attempt is: wDGbm}a-%m*x&g1 -3%.7z?/-??3.1g2"d,q.g}ryIGhH?~b1fx6+p?Uq`j Uc9[DDv#
-    [01:44] RPCS Original: Final decryption is: melee|48k1o0l8sjsbfmp%^w08281500|5o2i8s&!+?6uF4?xjcYtSzb?j-o?[q?o?2>}
+    [01:44] RPCS Original: Final decryption is: melee\|48k1o0l8sjsbfmp%^w08281500\|5o2i8s&!+?6uF4?xjcYtSzb?j-o?[q?o?2>}
     [01:44] RPCS Original: Final decryption is: characte yi1a;pjdbfsp%^r00119987j5o2w8sjmbf!<bW2f+ZL1iGk?N(D?^q,?+??2}/1=
-    [01:44] RPCS Original: Final decryption is: ram|4558e1i2i8mjmbfmp#^{4093000.b5o2i8?&o???$Y??TgV55oTi#*?1?P?oi$?`
+    [01:44] RPCS Original: Final decryption is: ram\|4558e1i2i8mjmbfmp#^{4093000.b5o2i8?&o???$Y??TgV55oTi#*?1?P?oi$?`
     [01:44] RPCS Original: Final decryption is: particle!yn3o8rkifeon%^r00017017d6m2w8sjmbf!<":,nlqVbsNd5n?`?Iu????/kO"z=
     
-Guessing that "characte" means "character" we can do the entire process over again using "character" instead of "password". We can also see that the pipe character "|" is being used to separate strings, so our test string becomes "character|". Next we see that random numbers fill the middle, so for each position we cycle through every possible digit and see which ones make the most sense when the key partials they result in are compared against every ciphertext.
+Guessing that "characte" means "character" we can do the entire process over again using "character" instead of "password". We can also see that the pipe character "\|" is being used to separate strings, so our test string becomes "character\|". Next we see that random numbers fill the middle, so for each position we cycle through every possible digit and see which ones make the most sense when the key partials they result in are compared against every ciphertext.
 
 Another option available to us is to return to our assertion that C1 ⊕ C2 == P1 ⊕ P2. With more complex many-time pad examples, we can use this fact to fully decrypt ciphertexts statistical knowledge of common characters as well as information about how text is encoded when it goes through the encryption process.
 
